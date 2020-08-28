@@ -40,6 +40,8 @@ int main(int argc, char* argv[]) {
 		Address()
 	);
 
+	firstSourceHelper.SetAttribute("DataRate", StringValue("8Mbps"));
+
 	AddressValue firstDestinationAddress(InetSocketAddress(pointToPointDumbbell.GetRightIpv4Address(0), 1000));
 
 	firstSourceHelper.SetAttribute("Remote", firstDestinationAddress);
@@ -48,8 +50,6 @@ int main(int argc, char* argv[]) {
 		"ns3::TcpSocketFactory",
 		Address()
 	);
-
-	AddressValue firstSourceAddress(InetSocketAddress(pointToPointDumbbell.GetLeftIpv4Address(0), 1000));
 
 	firstDestinationHelper.SetAttribute("Local", firstDestinationAddress);
 
@@ -69,8 +69,14 @@ int main(int argc, char* argv[]) {
 	firstApplications.Start(Seconds(0.0));
 	firstApplications.Stop(Seconds(10.0));
 
+	NodeContainer sinkNodes;
+	sinkNodes.Add(pointToPointDumbbell.GetRight());
+
+	pointToPointRouter.EnablePcap("Ex1", sinkNodes);
+
 	Ipv4GlobalRoutingHelper::PopulateRoutingTables();
 
+	Simulator::Stop(Seconds(10.0));
 	Simulator::Run();
 	Simulator::Destroy();
 
