@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
 	firstApplications.Stop(Seconds(10.0));
 
 	NodeContainer sinkNodes;
-	sinkNodes.Add(pointToPointDumbbell.GetRight());
+	sinkNodes.Add(pointToPointDumbbell.GetRight(0));
 
 	pointToPointRouter.EnablePcap("Ex1", sinkNodes);
 
