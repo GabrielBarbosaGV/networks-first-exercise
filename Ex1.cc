@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 		Address()
 	);
 
-	firstSourceHelper.SetAttribute("DataRate", StringValue("8Mbps"));
+  firstSourceHelper.SetConstantRate(DataRate("8Mbps"), 1024);
 
 	AddressValue firstDestinationAddress(InetSocketAddress(pointToPointDumbbell.GetRightIpv4Address(0), 1000));
 
